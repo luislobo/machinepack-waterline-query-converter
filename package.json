@@ -1,0 +1,26 @@
+{
+  "name": "machinepack-waterline-query-converter",
+  "version": "0.1.0",
+  "description": "Converts Waterline criteria queries into Waterline Query formatted queries.",
+  "scripts": {
+    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+  },
+  "keywords": [
+    "Waterline Query Converter",
+    "machines",
+    "machinepack"
+  ],
+  "author": "Cody Stoltman <particlebanana@gmail.com>",
+  "license": "MIT",
+  "dependencies":{
+    "machine": "10.4.0"
+  },
+  "devDependencies": {
+
+  },
+  "machinepack": {
+    "friendlyName": "Waterline Query Converter",
+    "machineDir": "machines/",
+    "machines": []
+  }
+}
