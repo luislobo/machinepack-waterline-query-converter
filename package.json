@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Converts Waterline criteria queries into Waterline Query formatted queries.",
   "scripts": {
-    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+    "test": "node ./node_modules/mocha/bin/mocha --recursive"
   },
   "keywords": [
     "Waterline Query Converter",
@@ -12,11 +12,14 @@
   ],
   "author": "Cody Stoltman <particlebanana@gmail.com>",
   "license": "MIT",
-  "dependencies":{
+  "dependencies": {
+    "lodash": "4.5.1",
     "machine": "10.4.0"
   },
   "devDependencies": {
-
+    "eslint": "1.10.3",
+    "espree": "3.0.1",
+    "mocha": "2.3.4"
   },
   "machinepack": {
     "friendlyName": "Waterline Query Converter",
