@@ -24,6 +24,8 @@
   "machinepack": {
     "friendlyName": "Waterline Query Converter",
     "machineDir": "machines/",
-    "machines": []
+    "machines": [
+      "convert"
+    ]
   }
 }
