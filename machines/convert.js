@@ -113,7 +113,7 @@ module.exports = {
     var processFind = function processFind(criteria) {
       query.select = criteria.select || ['*'];
       query.from = model;
-      query.where = criteria.where || criteria || {};
+      query.where = criteria.where || {};
     };
 
 
@@ -257,9 +257,9 @@ module.exports = {
     //
     var buildQuery = function buildQuery() {
       // If there was any criteria, process it
-      var criteria;
-      if (inputs.criteria) {
-        criteria = processCriteria(inputs.criteria);
+      var criteria = inputs.criteria || {};
+      if (criteria.where) {
+        criteria.where = processCriteria(criteria.where);
       }
 
       switch (inputs.method) {

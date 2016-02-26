@@ -8,8 +8,10 @@ describe('Converter :: ', function() {
           model: 'user',
           method: 'find',
           criteria: {
-            firstName: 'Test',
-            lastName: 'User'
+            where: {
+              firstName: 'Test',
+              lastName: 'User'
+            }
           }
         },
         query: {
@@ -29,8 +31,10 @@ describe('Converter :: ', function() {
           model: 'user',
           method: 'find',
           criteria: {
-            votes: {
-              '>': 100
+            where: {
+              votes: {
+                '>': 100
+              }
             }
           }
         },
@@ -52,11 +56,13 @@ describe('Converter :: ', function() {
           model: 'user',
           method: 'find',
           criteria: {
-            votes: {
-              '>': 100
-            },
-            age: {
-              '<': 50
+            where: {
+              votes: {
+                '>': 100
+              },
+              age: {
+                '<': 50
+              }
             }
           }
         },

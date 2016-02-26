@@ -8,7 +8,9 @@ describe('Converter ::', function() {
           model: 'user',
           method: 'find',
           criteria: {
-            id: [1, 2, 3]
+            where: {
+              id: [1, 2, 3]
+            }
           }
         },
         query: {
@@ -29,14 +31,16 @@ describe('Converter ::', function() {
           model: 'user',
           method: 'find',
           criteria: {
-            or: [
-              {
-                id: [1, 2, 3]
-              },
-              {
-                id: [4, 5, 6]
-              }
-            ]
+            where: {
+              or: [
+                {
+                  id: [1, 2, 3]
+                },
+                {
+                  id: [4, 5, 6]
+                }
+              ]
+            }
           }
         },
         query: {
