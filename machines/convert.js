@@ -80,6 +80,43 @@ module.exports = {
       query.where = criteria.where || criteria || {};
     };
 
+
+    //  ╔╦╗╔═╗╔═╗╔╦╗╦═╗╔═╗╦ ╦
+    //   ║║║╣ ╚═╗ ║ ╠╦╝║ ║╚╦╝
+    //  ═╩╝╚═╝╚═╝ ╩ ╩╚═╚═╝ ╩
+    //
+    // Process a DESTROY query and a build a WQL destroy query.
+    var processDestroy = function processDestroy(criteria) {
+      query.del = true;
+      query.from = model;
+      query.where = criteria.where || {};
+    };
+
+
+    //  ╦ ╦╔═╗╔╦╗╔═╗╔╦╗╔═╗
+    //  ║ ║╠═╝ ║║╠═╣ ║ ║╣
+    //  ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝
+    //
+    // Process an UPDATE query and a build a WQL update query.
+    var processUpdate = function processUpdate(criteria) {
+      query.update = inputs.values || {};
+      query.using = model;
+      query.where = criteria.where || {};
+    };
+
+
+    //  ╔═╗╔═╗╦ ╦╔╗╔╔╦╗
+    //  ║  ║ ║║ ║║║║ ║
+    //  ╚═╝╚═╝╚═╝╝╚╝ ╩
+    //
+    // Process a COUNT query and a build a WQL update query.
+    var processCount = function processCount(criteria) {
+      query.count = inputs.values || {};
+      query.from = model;
+      query.where = criteria.where || {};
+    };
+
+
     //  ╔═╗╦═╗╔═╗╔═╗╔═╗╔═╗╔═╗  ╔═╗╦═╗╦╔╦╗╔═╗╦═╗╦╔═╗
     //  ╠═╝╠╦╝║ ║║  ║╣ ╚═╗╚═╗  ║  ╠╦╝║ ║ ║╣ ╠╦╝║╠═╣
     //  ╩  ╩╚═╚═╝╚═╝╚═╝╚═╝╚═╝  ╚═╝╩╚═╩ ╩ ╚═╝╩╚═╩╩ ╩
@@ -129,6 +166,18 @@ module.exports = {
         case 'find':
         case 'findOne':
           processFind(criteria);
+          break;
+
+        case 'destroy':
+          processDestroy(criteria);
+          break;
+
+        case 'update':
+          processUpdate(criteria);
+          break;
+
+        case 'count':
+          processCount(criteria);
           break;
       }
     };
