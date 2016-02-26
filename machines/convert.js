@@ -163,6 +163,51 @@ module.exports = {
     var processCriteria = function processCriteria(criteria) {
       // Loop through the criteria looking for IN arrays
       _.each(criteria, function process(val, key) {
+        // Normalize ! to NOT
+        if (key === '!') {
+          delete criteria[key];
+          criteria.not = val;
+          key = 'not';
+        }
+
+        // If this is a LIKE query, just run through the criteria and set LIKE
+        // inside the value instead of outside it.
+        if (key === 'like') {
+          _.each(val, function normalizeLike(attrVal, attrKey) {
+            val[attrKey] = {};
+            val[attrKey].like = attrVal;
+          });
+
+          delete criteria.like;
+          criteria = _.merge(criteria, val);
+
+          return criteria;
+        }
+
+        // If this is a CONTAINS query, convert it to a LIKE query
+        if (key === 'contains') {
+          criteria = { like: '%' + val + '%' };
+          return criteria;
+        }
+
+        // If this is an ENDSWITH query, convert it to a LIKE query
+        if (key === 'endsWith') {
+          criteria = { like: '%' + val };
+          return criteria;
+        }
+
+        // If this is an STARTSWITH query, convert it to a LIKE query
+        if (key === 'startsWith') {
+          criteria = { like: val + '%' };
+          return criteria;
+        }
+
+        // Recurse through the criteria
+        if (_.isPlainObject(val)) {
+          criteria[key] = processCriteria(val);
+          return;
+        }
+
         // Handle OR criteria
         if (key === 'or' && _.isArray(val)) {
           _.each(val, function processOrClause(clause) {
@@ -178,6 +223,29 @@ module.exports = {
             in: val
           };
         }
+
+        // Handle normalizing spelled out operators
+        if (key === 'greaterThan') {
+          criteria['>'] = val;
+          delete criteria[key];
+        }
+
+        if (key === 'lessThan') {
+          criteria['<'] = val;
+          delete criteria[key];
+        }
+
+        if (key === 'greaterThanOrEqual') {
+          criteria['>='] = val;
+          delete criteria[key];
+        }
+
+        if (key === 'lessThanOrEqual') {
+          criteria['<='] = val;
+          delete criteria[key];
+        }
+
+        return criteria;
       });
 
       return criteria;
