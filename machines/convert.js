@@ -58,6 +58,42 @@ module.exports = {
     // Hold the final query value
     var query = {};
 
+
+    //  ╔╦╗╔═╗╔╦╗╦╔═╗╦╔═╗╦═╗╔═╗
+    //  ║║║║ ║ ║║║╠╣ ║║╣ ╠╦╝╚═╗
+    //  ╩ ╩╚═╝═╩╝╩╚  ╩╚═╝╩╚═╚═╝
+
+    if (inputs.criteria) {
+      if (inputs.criteria.skip) {
+        query.skip = inputs.criteria.skip;
+      }
+
+      if (inputs.criteria.sort) {
+        var sort = [];
+        _.each(inputs.criteria.sort, function normalizeSort(val, key) {
+          var sortObj = {};
+
+          if (val === 0 || val === -1) {
+            val = 'desc';
+          }
+
+          if (val === 1) {
+            val = 'asc';
+          }
+
+          sortObj[key] = val;
+          sort.push(sortObj);
+        });
+
+        query.orderBy = sort;
+      }
+
+      if (inputs.criteria.limit) {
+        query.limit = inputs.criteria.limit;
+      }
+    }
+
+
     //  ╔═╗╦═╗╔═╗╔═╗╔╦╗╔═╗
     //  ║  ╠╦╝║╣ ╠═╣ ║ ║╣
     //  ╚═╝╩╚═╚═╝╩ ╩ ╩ ╚═╝
